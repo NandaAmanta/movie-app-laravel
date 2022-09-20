@@ -89,6 +89,10 @@ class Handler extends ExceptionHandler
             return $this->errorResponse($exception->getMessage(), 401);
         }
 
+        if ($exception instanceof WrongCredentialException) {
+            return $this->errorResponse("wrong credentials", 400);
+        }
+
         return $this->errorResponse($exception->getMessage(), 500);
     }
 }

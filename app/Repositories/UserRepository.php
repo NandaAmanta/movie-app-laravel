@@ -18,4 +18,9 @@ class UserRepository
     {
         return $this->user::create($data);
     }
+
+    public function findByEmail(String $email)
+    {
+        return $this->user::where("email", $email)->first();
+    }
 }

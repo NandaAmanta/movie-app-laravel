@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string("password");
             $table->string("email")->unique();
             $table->string("avatar")->nullable();
-            $table->boolean("is_admin")->default(true);
+            $table->boolean("is_admin")->default(false);
             $table->date("deleted_at")->nullable();
         });
     }
