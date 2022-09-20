@@ -6,6 +6,7 @@ use App\Models\Movie;
 use App\Services\MovieService;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MovieController extends Controller
 {

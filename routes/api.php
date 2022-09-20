@@ -23,6 +23,6 @@ Route::post("/auth/signup", [AuthController::class, "signup"]);
 
 
 // Protected
-Route::group(['middleware' => ['auth:sanctum']], function () {
-    // Route::get("/auth/login", [AuthController::class, "login"]);
+Route::group(['middleware' => ['auth:sanctum',"checkRole"]], function () {
+    // Route::get("/tess", [MovieController::class, "index"]);
 });
