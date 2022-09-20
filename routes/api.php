@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MovieController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -16,9 +17,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Public
-// Route::get("/movies", [MovieController::class, "index"]);
+Route::get("/movies", [MovieController::class, "index"]);
+Route::post("/auth/login", [AuthController::class, "login"]);
+Route::post("/auth/signup", [AuthController::class, "signup"]);
+
 
 // Protected
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::get("/movies", [MovieController::class, "index"]);
+    // Route::get("/auth/login", [AuthController::class, "login"]);
 });

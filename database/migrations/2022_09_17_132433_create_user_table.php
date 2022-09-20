@@ -18,10 +18,11 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string("name");
+            $table->string("password");
             $table->string("email")->unique();
-            $table->string("avatar");
-            $table->boolean("is_admin");
-            $table->date("deleted_at");
+            $table->string("avatar")->nullable();
+            $table->boolean("is_admin")->default(true);
+            $table->date("deleted_at")->nullable();
         });
     }
 

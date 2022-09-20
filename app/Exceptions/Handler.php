@@ -89,6 +89,6 @@ class Handler extends ExceptionHandler
             return $this->errorResponse($exception->getMessage(), 401);
         }
 
-        return $this->errorResponse('Internal Server Error', 500);
+        return $this->errorResponse($exception->getMessage(), 500);
     }
 }
