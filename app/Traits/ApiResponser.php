@@ -37,12 +37,12 @@ trait ApiResponser
 		], $code);
 	}
 
-	protected function errorResponse($message = null, $code)
+	protected function errorResponse($message = null, $code , $errors = [])
 	{
 		return response()->json([
 			'success' => false,
 			'message' => $message,
-			'errors' => []
+			'errors' => $errors
 		], $code);
 	}
 }

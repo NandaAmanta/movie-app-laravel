@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use App\Traits\ApiResponser;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -73,10 +74,10 @@ class Handler extends ExceptionHandler
             return $this->errorResponse($exception->getMessage(), $exception->getStatusCode());
         }
 
-        if (config('app.debug')) {
-            return parent::render($request, $exception);
+        if ($exception instanceof ValidationException) {
+            return $this->errorResponse("Bad Request", 400, $exception->errors());
         }
 
-        return $this->errorResponse('Unexpected Exception. Try later', 500);
+        return $this->errorResponse('Internal Server Error', 500);
     }
 }
