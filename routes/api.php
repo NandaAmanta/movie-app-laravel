@@ -16,11 +16,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Public
-Route::get("/movies", [MovieController::class, "index"]);
+// Route::get("/movies", [MovieController::class, "index"]);
 
 // Protected
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get("/movies", [MovieController::class, "index"]);
 });
-

@@ -4,7 +4,10 @@ namespace App\Exceptions;
 
 use App\Traits\ApiResponser;
 use Exception;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
@@ -76,6 +79,14 @@ class Handler extends ExceptionHandler
 
         if ($exception instanceof ValidationException) {
             return $this->errorResponse("Bad Request", 400, $exception->errors());
+        }
+
+        if ($exception instanceof AuthenticationException) {
+            return $this->errorResponse($exception->getMessage(), 403);
+        }
+
+        if ($exception instanceof AuthorizationException) {
+            return $this->errorResponse($exception->getMessage(), 401);
         }
 
         return $this->errorResponse('Internal Server Error', 500);
