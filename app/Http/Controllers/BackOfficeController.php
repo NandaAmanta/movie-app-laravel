@@ -2,12 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\TagService;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 
 class BackOfficeController extends Controller
 {
     use ApiResponser;
+
+    private TagService $tagService;
+
+    public function __construct(TagService $tagService)
+    {
+        $this->tagService = $tagService;
+    }
 
     public function  createSchedule()
     {
@@ -19,5 +27,7 @@ class BackOfficeController extends Controller
 
     public function getTagList()
     {
+        $data = $this->tagService->getAll();
+        return $this->successResponseListData($data, "Success get all tags");
     }
 }

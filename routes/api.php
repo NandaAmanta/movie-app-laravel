@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BackOfficeController;
 use App\Http\Controllers\MovieController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -29,5 +30,5 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 // Protected and Admin Only
 Route::group(['middleware' => ['auth:sanctum', "checkRole"]], function () {
-    // 
+    Route::get("/backoffice/tags", [BackOfficeController::class, "getTagList"]);
 });
