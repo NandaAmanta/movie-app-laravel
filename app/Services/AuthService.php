@@ -2,9 +2,11 @@
 
 namespace App\Services;
 
+use App\Exceptions\EmailExistException;
 use App\Exceptions\WrongCredentialException;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\SignupRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Repositories\UserRepository;
 
@@ -29,20 +31,26 @@ class AuthService
         $token = $user->createToken("token");
 
         $result = [
-            $user,
+            new UserResource($user),
             "token" => $token->plainTextToken
         ];
 
         return $result;
     }
-    
-    public function signup(SignupRequest $signUpRequest): User
+
+    public function signup(SignupRequest $signUpRequest): UserResource
     {
+
         $data = $signUpRequest->all();
+        $checkEmail = $this->userRepo->findByEmail($data["email"]);
+
+        if ($checkEmail != null) {
+            throw new EmailExistException();
+        }
+
         $data["password"] = bcrypt($data["password"]);
         $user = $this->userRepo->save($data);
 
-
-        return $user;
+        return new UserResource($user);
     }
 }

@@ -6,6 +6,7 @@ use App\Traits\ApiResponser;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
@@ -92,6 +93,12 @@ class Handler extends ExceptionHandler
         if ($exception instanceof WrongCredentialException) {
             return $this->errorResponse("wrong credentials", 400);
         }
+
+        if($exception instanceof EmailExistException){
+            return $this->errorResponse("Email already in used", 400);
+
+        }
+
 
         return $this->errorResponse($exception->getMessage(), 500);
     }
