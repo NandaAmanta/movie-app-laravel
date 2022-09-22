@@ -20,8 +20,8 @@ return new class extends Migration
             $table->integer("qty");
             $table->double("price");
             $table->double("sub_total_price");
-            $table->json("snapshots");
-            $table->date("deleted_at");
+            $table->json("snapshots")->nullable();
+            $table->date("deleted_at")->nullable();
             $table->timestamps();
         });
     }

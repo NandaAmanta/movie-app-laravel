@@ -24,4 +24,10 @@ class MovieScheduleRepository
         $movieSchedules = $this->movieSchedule::paginate($perPage);
         return $movieSchedules;
     }
+
+    public function findById(int $id)
+    {
+        $movieSchedules = $this->movieSchedule::where("id", $id)->first();
+        return $movieSchedules;
+    }
 }

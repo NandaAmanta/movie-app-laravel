@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("user_id")->constrained("movies");
+            $table->foreignId("user_id")->constrained("users");
             $table->enum("payment_method", ["CASH", "BANK"]);
-            $table->double("total_item_price");
-            $table->date("deleted_at");
+            $table->double("total_item_price")->default(0);
+            $table->date("deleted_at")->nullable();
             $table->timestamps();
         });
     }

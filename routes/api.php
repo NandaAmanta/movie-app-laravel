@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BackOfficeController;
 use App\Http\Controllers\MovieController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,7 +28,7 @@ Route::post("/auth/signup", [AuthController::class, "signup"]);
 
 // Protected
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    // 
+    Route::post("/order", [OrderController::class, "create"]);
 });
 
 // Protected and Admin Only
