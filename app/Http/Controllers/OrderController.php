@@ -15,12 +15,18 @@ class OrderController extends Controller
 
     public function __construct(OrderService $orderService)
     {
-        $this->orderService = $orderService;        
+        $this->orderService = $orderService;
+    }
+
+    public function getMine()
+    {
+        $result = $this->orderService->getByAuth();
+        return $this->successResponseListData($result, "success get orders");
     }
 
     public function create(CreateOrderRequest $request)
     {
         $result = $this->orderService->create($request);
-        return $this->successResponse($result , "Success create order");
+        return $this->successResponse($result, "Success create order");
     }
 }

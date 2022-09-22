@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     use HasFactory;
-    
+
     /**
      * @var string $table
      */
@@ -24,5 +24,16 @@ class Order extends Model
         'payment_method',
         'total_item_price',
         'deleted_at',
+    ];
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'user_id',
+        'updated_at',
+        'created_at',
+        "deleted_at"
     ];
 }

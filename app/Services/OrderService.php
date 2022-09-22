@@ -24,6 +24,12 @@ class OrderService
         $this->movieScheduleRepo = $movieScheduleRepo;
     }
 
+    public function getByAuth()
+    {
+        $order = $this->orderRepository->findAllByUserIdAndPaginate(Auth::user()->id);
+        return $order;
+    }
+
     public function create(CreateOrderRequest $request)
     {
 

@@ -29,6 +29,7 @@ Route::post("/auth/signup", [AuthController::class, "signup"]);
 // Protected
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post("/order", [OrderController::class, "create"]);
+    Route::get("/order", [OrderController::class, "getMine"]);
 });
 
 // Protected and Admin Only

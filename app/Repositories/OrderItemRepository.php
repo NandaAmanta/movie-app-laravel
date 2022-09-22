@@ -20,9 +20,9 @@ class OrderItemRepository
         return $result;
     }
 
-    public function findAllByOrderIdAndPaginate(string $orderId, int $perPage = 15)
+    public function findAllByOrderId(string $orderId)
     {
-        $result = $this->orderItem::where("order_id", $orderId)->paginate($perPage);
+        $result = $this->orderItem::where("order_id", $orderId);
         return $result;
     }
 }
