@@ -25,4 +25,15 @@ class Movie extends Model
         'play_until',
         'deleted_at'
     ];
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'updated_at',
+        'created_at',
+        "deleted_at"
+    ];
 }

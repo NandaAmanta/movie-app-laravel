@@ -3,7 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Movie;
-
+use Illuminate\Support\Facades\DB;
 
 class MovieRepository
 {
@@ -18,6 +18,11 @@ class MovieRepository
     public function findAllAndPaginate(int $perPage = 15)
     {
         $movies = $this->movie::paginate($perPage);
+        return $movies;
+    }
+
+    public function save(array $data){
+        $movies = $this->movie->insertOrIgnore($data);
         return $movies;
     }
 }

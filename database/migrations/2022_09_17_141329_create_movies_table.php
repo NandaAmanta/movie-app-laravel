@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string("title");
             $table->text("overview");
             $table->string("poster");
-            $table->date("play_until");
-            $table->date("deleted_at");
+            $table->date("play_until")->nullable();
+            $table->date("deleted_at")->nullable();
             $table->timestamps();
         });
     }

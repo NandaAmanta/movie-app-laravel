@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Services\TagService;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class BackOfficeController extends Controller
 {
