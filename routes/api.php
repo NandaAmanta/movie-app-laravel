@@ -34,4 +34,5 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 Route::group(['middleware' => ['auth:sanctum', "checkRole"]], function () {
     Route::get("/backoffice/tags", [BackOfficeController::class, "getTagList"]);
     Route::post("/backoffice/movies/schedules", [BackOfficeController::class, "createSchedule"]);
+    Route::put("/backoffice/movies/{id}", [BackOfficeController::class, "updateMovie"]);
 });

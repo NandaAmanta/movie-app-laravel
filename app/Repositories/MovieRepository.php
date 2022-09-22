@@ -21,12 +21,20 @@ class MovieRepository
         return $movies;
     }
 
-    public function findById(int $id){
-        $movie = $this->movie::where("id",$id)->first();
+    public function update(int $id, array $data)
+    {
+        $movie = $this->movie::where("id", $id)->update($data);
         return $movie;
     }
 
-    public function save(array $data){
+    public function findById(int $id)
+    {
+        $movie = $this->movie::where("id", $id)->first();
+        return $movie;
+    }
+
+    public function save(array $data)
+    {
         $movies = $this->movie->insertOrIgnore($data);
         return $movies;
     }

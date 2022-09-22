@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Exceptions\ThirdPartyException;
+use App\Http\Requests\UpdateMovieRequest;
 use App\Repositories\MovieRepository;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -23,6 +24,13 @@ class MovieService
         return $movies;
     }
 
+    public function update($id, UpdateMovieRequest $request)
+    {
+        $dataReq = $request->only(["title", "overview"]);
+        $result = $this->movieRepository->update($id, $dataReq);
+        return $result;
+    }
+
     public function fetch()
     {
         Log::info("Fetching ongoing movie from TMDB");
@@ -37,7 +45,7 @@ class MovieService
         $this->movieRepository->save($result);
     }
 
-    
+
     private function mapResponseResults(array $data): array
     {
         $result = array();

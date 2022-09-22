@@ -44,6 +44,7 @@ class MovieScheduleService
         return $result;
     }
 
+
     public function getAll()
     {
         return $this->movieScheduleRepo->findAll();

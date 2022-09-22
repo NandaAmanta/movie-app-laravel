@@ -3,13 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateScheduleRequest;
-use App\Models\MovieSchedule;
+use App\Http\Requests\UpdateMovieRequest;
 use App\Services\MovieScheduleService;
+use App\Services\MovieService;
 use App\Services\TagService;
 use App\Traits\ApiResponser;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
 
 class BackOfficeController extends Controller
 {
@@ -17,11 +15,13 @@ class BackOfficeController extends Controller
 
     private TagService $tagService;
     private MovieScheduleService $movieScheduleService;
+    private MovieService $movieService;
 
-    public function __construct(TagService $tagService, MovieScheduleService $movieScheduleService)
+    public function __construct(TagService $tagService, MovieScheduleService $movieScheduleService, MovieService $movieService)
     {
         $this->tagService = $tagService;
         $this->movieScheduleService = $movieScheduleService;
+        $this->movieService = $movieService;
     }
 
     public function  createSchedule(CreateScheduleRequest $request)
@@ -30,8 +30,10 @@ class BackOfficeController extends Controller
         return $this->successResponse($result, "success create new movie schedule");
     }
 
-    public function updateMovie()
+    public function updateMovie(UpdateMovieRequest $request, $id)
     {
+        $result = $this->movieService->update($id, $request);
+        return $this->successResponse($result, "Success update movie");
     }
 
     public function getTagList()
