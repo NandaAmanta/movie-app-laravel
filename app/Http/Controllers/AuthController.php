@@ -23,7 +23,7 @@ class AuthController extends Controller
     {
         $request->validated();
         $user = $this->authService->signup($request);
-        
+
         return $this->successResponse($user,"Success signup new user.");
     }
 
