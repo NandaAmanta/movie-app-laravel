@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Studio;
 use App\Models\User;
 use App\Services\MovieService;
 use Illuminate\Database\Seeder;
@@ -32,6 +33,11 @@ class DatabaseSeeder extends Seeder
             "email" => "admin@gmail.com",
             "password" => bcrypt("password"),
             "is_admin" => true,
+        ]);
+
+        Studio::create([
+            "seat_capacity" => 20,
+            "studio_number" => 1,
         ]);
 
         $this->movieService->fetch();

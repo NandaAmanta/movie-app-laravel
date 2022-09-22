@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\Route;
 
 // Public
 Route::get("/movies", [MovieController::class, "index"]);
+Route::get("/movies/schedules", [MovieController::class, "getAllMovieSchedule"]);
+
 Route::post("/auth/login", [AuthController::class, "login"]);
 Route::post("/auth/signup", [AuthController::class, "signup"]);
 
