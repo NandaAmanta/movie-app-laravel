@@ -9,6 +9,7 @@ use App\Http\Requests\SignupRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Repositories\UserRepository;
+use Illuminate\Support\Facades\Auth;
 
 class AuthService
 {
@@ -24,7 +25,7 @@ class AuthService
         $data = $loginRequest->all();
         $user = $this->userRepo->findByEmail($data["email"]);
 
-        if ($user == null) {
+        if ($user == null || !Auth::attempt($data)) {
             throw new WrongCredentialException();
         }
 
