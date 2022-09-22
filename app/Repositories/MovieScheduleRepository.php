@@ -13,13 +13,15 @@ class MovieScheduleRepository
         $this->movieSchedule = $movieSchedule;
     }
 
-    public function save()
+    public function save(array $data)
     {
+        $result = $this->movieSchedule::create($data);
+        return $result;
     }
 
     public function findAll(int $perPage = 15)
     {
-        $movieSchedule = $this->movieSchedule::paginate($perPage);
-        return $movieSchedule;
+        $movieSchedules = $this->movieSchedule::paginate($perPage);
+        return $movieSchedules;
     }
 }

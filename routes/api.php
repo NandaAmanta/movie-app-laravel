@@ -33,4 +33,5 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 // Protected and Admin Only
 Route::group(['middleware' => ['auth:sanctum', "checkRole"]], function () {
     Route::get("/backoffice/tags", [BackOfficeController::class, "getTagList"]);
+    Route::post("/backoffice/movies/schedules", [BackOfficeController::class, "createSchedule"]);
 });

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateScheduleRequest;
 use App\Models\MovieSchedule;
 use App\Services\MovieScheduleService;
 use App\Services\TagService;
@@ -23,14 +24,14 @@ class BackOfficeController extends Controller
         $this->movieScheduleService = $movieScheduleService;
     }
 
-    public function  createSchedule()
+    public function  createSchedule(CreateScheduleRequest $request)
     {
-        
+        $result = $this->movieScheduleService->create($request);
+        return $this->successResponse($result, "success create new movie schedule");
     }
 
     public function updateMovie()
     {
-
     }
 
     public function getTagList()

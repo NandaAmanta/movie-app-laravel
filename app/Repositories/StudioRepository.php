@@ -14,7 +14,7 @@ class StudioRepository
         $this->studio = $studio;
     }
 
-    public function findById(int $id) : Studio
+    public function findById(int $id)
     {
         $result = $this->studio::where("id",$id)->first();
         return $result;

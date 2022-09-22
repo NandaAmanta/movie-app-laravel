@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer("studio_number");
             $table->integer("seat_capacity");
-            $table->date("deleted_at");
+            $table->date("deleted_at")->nullable();
             $table->timestamps();
         });
     }

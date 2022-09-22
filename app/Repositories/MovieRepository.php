@@ -21,6 +21,11 @@ class MovieRepository
         return $movies;
     }
 
+    public function findById(int $id){
+        $movie = $this->movie::where("id",$id)->first();
+        return $movie;
+    }
+
     public function save(array $data){
         $movies = $this->movie->insertOrIgnore($data);
         return $movies;

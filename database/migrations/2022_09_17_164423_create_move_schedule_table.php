@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string("end_time");
             $table->double("price");
             $table->date("date");
-            $table->date("deleted_at");
+            $table->date("deleted_at")->nullable();
             $table->timestamps();
         });
     }
