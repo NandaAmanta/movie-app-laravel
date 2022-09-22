@@ -1,31 +1,40 @@
 <?php
 
-namespace App\Services;
+namespace App\Console\Commands;
 
 use App\Exceptions\ThirdPartyException;
+use App\Models\Movie;
 use App\Repositories\MovieRepository;
+use App\Services\MovieService;
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
-class MovieService
+class FetchOngoingMovie extends Command
 {
 
-    private MovieRepository $movieRepository;
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'fetch';
 
-    public function __construct(MovieRepository $movieRepository)
-    {
-        $this->movieRepository = $movieRepository;
-    }
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'fetch ongoing movie from TMDB to local database.';
 
-    public function getAll()
+    /**
+     * Execute the console command.
+     *
+     * @return int
+     */
+    public function handle()
     {
-        $movies = $this->movieRepository->findAllAndPaginate();
-        return $movies;
-    }
-
-    public function fetch()
-    {
-        Log::info("Fetching ongoing movie from TMDB");
         $response = Http::get("https://api.themoviedb.org/3/movie/now_playing?api_key=" . env("TMDB_API_KEY"));
 
         if (!$response->ok()) {
@@ -34,10 +43,11 @@ class MovieService
         }
 
         $result = $this->mapResponseResults($response->json("results"));
-        $this->movieRepository->save($result);
+        DB::table("movies")->insertOrIgnore($result);
+        
+        echo "Fetched ongoing movie from TMDB => ".date("Y-m-d H:i:s")."\n" ;
     }
 
-    
     private function mapResponseResults(array $data): array
     {
         $result = array();
