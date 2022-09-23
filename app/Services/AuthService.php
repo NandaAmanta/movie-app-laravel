@@ -7,6 +7,7 @@ use App\Exceptions\WrongCredentialException;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\SignupRequest;
 use App\Http\Resources\UserResource;
+use App\Jobs\SendWellcomeEmailJob;
 use App\Models\User;
 use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Auth;
@@ -49,8 +50,13 @@ class AuthService
             throw new EmailExistException();
         }
 
+        $imageName = time() . '.' . $signUpRequest->image->extension();
+        $signUpRequest->image->move(public_path('images'), $imageName);
+
+        $data["avatar"] = "/images/" . $imageName;
         $data["password"] = bcrypt($data["password"]);
         $user = $this->userRepo->save($data);
+
 
         return new UserResource($user);
     }

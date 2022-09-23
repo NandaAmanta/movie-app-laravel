@@ -4,7 +4,11 @@ namespace App\Services;
 
 use App\Exceptions\ThirdPartyException;
 use App\Http\Requests\UpdateMovieRequest;
+use App\Jobs\GenerateMovieTagJob;
+use App\Models\MovieTag;
 use App\Repositories\MovieRepository;
+use App\Repositories\MovieTagRepository;
+use App\Repositories\TagRepository;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
@@ -12,10 +16,14 @@ class MovieService
 {
 
     private MovieRepository $movieRepository;
+    private MovieTagRepository $movieTagRepository;
+    private TagRepository $tagRepository;
 
-    public function __construct(MovieRepository $movieRepository)
+    public function __construct(MovieRepository $movieRepository, MovieTagRepository $movieTagRepository, TagRepository $tagRepository)
     {
         $this->movieRepository = $movieRepository;
+        $this->movieTagRepository = $movieTagRepository;
+        $this->tagRepository = $tagRepository;
     }
 
     public function getAll()
@@ -41,24 +49,13 @@ class MovieService
             throw new ThirdPartyException("failed get ongoing movies on TMDB");
         }
 
-        $result = $this->mapResponseResults($response->json("results"));
+        $result = mapResponseTmdbToMovie($response->json("results"));
+
+
         $this->movieRepository->save($result);
-    }
 
-
-    private function mapResponseResults(array $data): array
-    {
-        $result = array();
-        for ($i = 0; $i < count($data); $i++) {
-            $indexData = [
-                "id" => $data[$i]["id"],
-                "title" => $data[$i]["title"],
-                "overview" => $data[$i]["overview"],
-                "poster" => $data[$i]["poster_path"],
-            ];
-            array_push($result, $indexData);
+        for ($i = 0; $i < count($result); $i++) {
+            dispatch(new GenerateMovieTagJob($this->movieTagRepository, $this->tagRepository, $result[$i]["title"], $result[$i]["id"]));
         }
-
-        return $result;
     }
 }

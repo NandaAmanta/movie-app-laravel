@@ -14,6 +14,11 @@ class TagRepository
         $this->tag = $tag;
     }
 
+    public function save(array $data){
+        $result = $this->tag::create($data);
+        return $result;
+    }
+
     public function findAllAndPaginate(int $perPage = 15)
     {
         $result = $this->tag::paginate($perPage);

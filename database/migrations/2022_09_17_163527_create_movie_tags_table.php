@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamps();
             $table->foreignId("movie_id")->constrained("movies");
             $table->foreignId("tag_id")->constrained("movies");
-            $table->date("deleted_at");
+            $table->date("deleted_at")->nullable();
         });
     }
 

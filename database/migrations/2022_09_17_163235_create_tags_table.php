@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('tags', function (Blueprint $table) {
             $table->id();
             $table->string("name");
-            $table->date("deleted_at");
+            $table->date("deleted_at")->nullable();
             $table->timestamps();
         });
     }

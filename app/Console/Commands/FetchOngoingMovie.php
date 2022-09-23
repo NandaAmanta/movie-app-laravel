@@ -42,25 +42,25 @@ class FetchOngoingMovie extends Command
             throw new ThirdPartyException("failed get ongoing movies on TMDB");
         }
 
-        $result = $this->mapResponseResults($response->json("results"));
+        $result = mapResponseTmdbToMovie($response->json("results"));
         DB::table("movies")->insertOrIgnore($result);
         
         echo "Fetched ongoing movie from TMDB => ".date("Y-m-d H:i:s")."\n" ;
     }
 
-    private function mapResponseResults(array $data): array
-    {
-        $result = array();
-        for ($i = 0; $i < count($data); $i++) {
-            $indexData = [
-                "id" => $data[$i]["id"],
-                "title" => $data[$i]["title"],
-                "overview" => $data[$i]["overview"],
-                "poster" => $data[$i]["poster_path"],
-            ];
-            array_push($result, $indexData);
-        }
+    // private function mapResponseResults(array $data): array
+    // {
+    //     $result = array();
+    //     for ($i = 0; $i < count($data); $i++) {
+    //         $indexData = [
+    //             "id" => $data[$i]["id"],
+    //             "title" => $data[$i]["title"],
+    //             "overview" => $data[$i]["overview"],
+    //             "poster" => $data[$i]["poster_path"],
+    //         ];
+    //         array_push($result, $indexData);
+    //     }
 
-        return $result;
-    }
+    //     return $result;
+    // }
 }
