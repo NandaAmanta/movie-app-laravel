@@ -36,4 +36,8 @@ class Movie extends Model
         'created_at',
         "deleted_at"
     ];
+
+    public function movieSchedules(){
+        return $this->hasMany(MovieSchedule::class);
+    }
 }

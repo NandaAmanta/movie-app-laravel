@@ -23,4 +23,8 @@ class Studio extends Model
         'seat_capacity',
         'deleted_at'
     ];
+
+    public function movieSchedules(){
+        return $this->hasMany(MovieSchedule::class);
+    }
 }

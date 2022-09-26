@@ -13,6 +13,13 @@ class MovieSchedule extends Model
      */
     protected $table = 'movie_schedules';
 
+    public function movie(){
+        return $this->belongsTo(Movie::class);
+    }
+    public function studio(){
+        return $this->belongsTo(Studio::class);
+    }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -28,6 +35,8 @@ class MovieSchedule extends Model
         'deleted_at'
     ];
     protected $hidden = [
+        'studio_id',
+        'movie_id',
         'updated_at',
         'created_at',
         "deleted_at"

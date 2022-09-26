@@ -41,6 +41,9 @@ class MovieScheduleService
 
         $dataReq["date"] = Carbon::createFromFormat('Y-m-d H:i', $dataReq["date"]);
         $result = $this->movieScheduleRepo->save($dataReq);
+        $result["movie"] = $result->movie;
+        $result["studio"] = $result->studio;
+        
         return $result;
     }
 
