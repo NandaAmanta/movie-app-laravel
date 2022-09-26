@@ -13,6 +13,11 @@ class Order extends Model
      * @var string $table
      */
     protected $table = 'orders';
+    
+    public function orderItems(){
+        return $this->hasMany(OrderItem::class);
+    }
+
 
     /**
      * The attributes that are mass assignable.

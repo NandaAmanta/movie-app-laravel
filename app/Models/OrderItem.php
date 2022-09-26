@@ -33,4 +33,8 @@ class OrderItem extends Model
         'created_at',
         "deleted_at"
     ];
+
+    public function order(){
+        return $this->belongsTo(Order::class);
+    }
 }

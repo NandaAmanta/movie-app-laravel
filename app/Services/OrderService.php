@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Http\Requests\CreateOrderRequest;
+use App\Models\Order;
+use App\Models\OrderItem;
 use App\Repositories\MovieScheduleRepository;
 use App\Repositories\OrderItemRepository;
 use App\Repositories\OrderRepository;
@@ -65,6 +67,8 @@ class OrderService
         }
         $this->orderItemRepository->save($orderItemReq);
         $this->orderRepository->update($order["id"], ["total_item_price" => $totalPrice]);
+        $order["order_items"] = $order->orderItems;
+      
 
         return $order;
     }
