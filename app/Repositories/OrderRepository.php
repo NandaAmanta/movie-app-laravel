@@ -29,7 +29,7 @@ class OrderRepository
 
     public function findAllByUserIdAndPaginate(string $userId, int $perPage = 15)
     {
-        $result = $this->order::with("orderItems")-where("user_id", $userId)->paginate($perPage);
+        $result = $this->order::with("orderItems")->where("user_id", $userId)->paginate($perPage);
         return $result;
     }
 }
